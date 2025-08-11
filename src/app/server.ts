@@ -20,3 +20,14 @@ const startserver = async ()=>{
 
 startserver()
 
+process.on("unhandledRejection",()=>{
+   console.log("Unhandled Rejection deceted server shutting down..")
+   if(server){
+      server.close(()=>{
+         process.exit(1)
+      })
+   }
+
+   process.exit(1)
+})
+
