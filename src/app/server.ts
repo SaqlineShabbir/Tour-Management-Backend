@@ -8,7 +8,7 @@ let server:Server;
 let a;
 const startserver = async ()=>{
  try {
-   console.log(envVars.NODE_ENV)
+
      await mongoose.connect(envVars.DB_URL)
   console.log("Connected to DB")
 
