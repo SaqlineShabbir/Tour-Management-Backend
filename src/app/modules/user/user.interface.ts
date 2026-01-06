@@ -30,6 +30,6 @@ export interface IUser {
      role:Role
     auths:AuthProvider[]
     bookings?:Types.ObjectId[]
-    guideS?:Types.ObjectId[]
+    guides?:Types.ObjectId[]
 
 }
