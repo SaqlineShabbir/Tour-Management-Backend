@@ -1,9 +1,20 @@
-import { Router } from "express";
+import {
+  Router,
+  type NextFunction,
+  type Request,
+  type Response,
+} from "express";
 import { userController } from "./user.controller";
+import { createUserZodSchema } from "./user.validation";
+import type { ZodObject } from "zod";
+import { validateRequest } from "../../middlewares/validateRequest";
 
+const router = Router();
 
-const router = Router()
-
-router.post("/register",userController.createUser)
-router.get("/all-users",userController.getAllUsers)
-export const userRoutes = router
+router.post(
+  "/register",
+  validateRequest(createUserZodSchema),
+  userController.createUser
+);
+router.get("/all-users", userController.getAllUsers);
+export const userRoutes = router;
