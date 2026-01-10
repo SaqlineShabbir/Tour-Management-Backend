@@ -7,11 +7,10 @@ import { AuthServices } from "./auth.service";
 
 const credintialsLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-   console.log("Login controller called");
-   console.log(req.body);
+   
     const loginInfo = await AuthServices.credintialsLogin(req.body);
 
-    console.log(loginInfo);
+   
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
