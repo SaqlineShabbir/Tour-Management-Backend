@@ -16,7 +16,7 @@ export const checkAuth =
 
       const verifiedToken = verifyToken(accessToken, envVars.JWT_SECRET);
 
-      if (!verifiedToken) {
+      if (!verifiedToken || typeof verifiedToken === "string") {
         throw new AppError(401, "Unauthorized access");
       }
       const role = (verifiedToken as JwtPayload).role;
@@ -24,6 +24,8 @@ export const checkAuth =
       if (!authRoles.includes(role)) {
         throw new AppError(403, "Forbidden access");
       }
+
+      req.user = verifiedToken
       next();
     } catch (error) {
       next(error);
