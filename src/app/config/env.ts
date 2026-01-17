@@ -8,12 +8,27 @@ interface EnvConfig {
   JWT_SECRET: string;
   JWT_EXPIRES_IN: string;
   BCRYPT_SALT_ROUNDS: string;
-  SUPER_ADMIN_EMAIL:string
-  SUPER_ADMIN_PASSWORD:string
+  SUPER_ADMIN_EMAIL: string;
+  SUPER_ADMIN_PASSWORD: string;
+  JWT_REFRESH_SECRET: string;
+  JWT_REFRESH_EXPIRES: string;
 }
 
 const loadEnvVars = (): EnvConfig => {
-  const requiredEnvVars: string[] = ["PORT", "DB_URL", "NODE_ENV", "JWT_SECRET", "JWT_EXPIRES_IN", "BCRYPT_SALT_ROUNDS","SUPER_ADMIN_EMAIL","SUPER_ADMIN_PASSWORD" ];
+  const requiredEnvVars: string[] = [
+    "PORT",
+    "DB_URL",
+    "NODE_ENV",
+    "JWT_SECRET",
+    "JWT_EXPIRES_IN",
+    "BCRYPT_SALT_ROUNDS",
+    "SUPER_ADMIN_EMAIL",
+    "SUPER_ADMIN_PASSWORD",
+    "JWT_REFRESH_SECRET",
+    "JWT_REFRESH_EXPIRES"
+
+
+  ];
   requiredEnvVars.forEach((key) => {
     if (!process.env[key]) {
       throw new Error(`missing required env variables ${key}`);
@@ -26,8 +41,10 @@ const loadEnvVars = (): EnvConfig => {
     JWT_SECRET: process.env.JWT_SECRET as string,
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN as string,
     BCRYPT_SALT_ROUNDS: process.env.BCRYPT_SALT_ROUNDS as string,
-    SUPER_ADMIN_PASSWORD:process.env.SUPER_ADMIN_PASSWORD as string,
-    SUPER_ADMIN_EMAIL: process.env.SUPER_ADMIN_EMAIL as string
+    SUPER_ADMIN_PASSWORD: process.env.SUPER_ADMIN_PASSWORD as string,
+    SUPER_ADMIN_EMAIL: process.env.SUPER_ADMIN_EMAIL as string,
+    JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET as string,
+    JWT_REFRESH_EXPIRES: process.env.JWT_REFRESH_EXPIRES as string,
   };
 };
 
