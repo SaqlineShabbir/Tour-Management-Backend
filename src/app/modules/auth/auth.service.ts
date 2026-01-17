@@ -40,10 +40,24 @@ const credintialsLogin = async (payload: Partial<IUser>) => {
   //   expiresIn: "1d",
   // });
 
-  const accessToken = generateToken(jwtPayload, envVars.JWT_SECRET, envVars.JWT_EXPIRES_IN);
+  const accessToken = generateToken(
+    jwtPayload,
+    envVars.JWT_SECRET,
+    envVars.JWT_EXPIRES_IN
+  );
+
+  const refreshToken = generateToken(
+    jwtPayload,
+    envVars.JWT_REFRESH_SECRET,
+    envVars.JWT_REFRESH_EXPIRES
+  );
+
+  const { password: pass, ...rest } = isExist.toObject();
 
   return {
     accessToken,
+    refreshToken,
+    user: rest,
   };
 };
 
