@@ -31,6 +31,10 @@ const getNewAccessToken = catchAsync(
     //     httpOnly: true,
     //   secure: false,
     // })
+    // res.cookie("accessToken",tokenInfo.accessToken,{
+    //     httpOnly: true,
+    //   secure: false,
+    // })
     setAuthCookie(res, tokenInfo);
     sendResponse(res, {
       statusCode: httpStatus.OK,
