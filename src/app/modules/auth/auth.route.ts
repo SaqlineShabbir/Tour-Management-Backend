@@ -10,5 +10,9 @@ router.post(
   "/login",
   authController.credintialsLogin
 );
+router.post(
+  "/refresh-token",
+  authController.getNewAccessToken
+);
 
 export const authRoutes = router;

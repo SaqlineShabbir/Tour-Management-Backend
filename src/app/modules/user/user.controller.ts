@@ -37,11 +37,7 @@ const updateUser = catchAsync(
     const verifiedToken = req.user
     const payload = req.body;
     const user = await userServices.updateUser(id, payload, verifiedToken);
-    // res.status(httpStatus.CREATED).json({
-    //   success: true,
-    //   message: "User created successfully",
-    //   data: user,
-    // });
+
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
