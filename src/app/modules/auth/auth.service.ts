@@ -6,7 +6,10 @@ import bcrypt from "bcryptjs";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import { generateToken, verifyToken } from "../../utils/jwt";
 import { envVars } from "../../config/env";
-import { createNewAccessTokenWithRefreshToken, createUserTokens } from "../../utils/userToken";
+import {
+  createNewAccessTokenWithRefreshToken,
+  createUserTokens,
+} from "../../utils/userToken";
 
 const credintialsLogin = async (payload: Partial<IUser>) => {
   const { email, password } = payload;
@@ -43,14 +46,46 @@ const credintialsLogin = async (payload: Partial<IUser>) => {
   };
 };
 const getNewAccessTokenService = async (refreshToken: string) => {
-   const getNewAccessToken =await createNewAccessTokenWithRefreshToken(refreshToken)
+  const getNewAccessToken =
+    await createNewAccessTokenWithRefreshToken(refreshToken);
 
   return {
-    accessToken:getNewAccessToken
+    accessToken: getNewAccessToken,
   };
 };
+const resetPasswordService = async (
+  oldPassword: string,
+  newPassword: string,
+  decodedToken: JwtPayload,
+) => {
+  const user = await User.findById(decodedToken.userId);
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'User not found');
+  }
+
+  const isOldPasswordMatched = await bcrypt.compare(
+    oldPassword,
+    user.password as string,
+  );
+
+  if (!isOldPasswordMatched) {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'Password does not match');
+  }
+
+  user.password = await bcrypt.hash(
+    newPassword,
+    Number(envVars.BCRYPT_SALT_ROUNDS),
+  );
+
+  await user.save(); 
+
+  return true;
+};
+
 
 export const AuthServices = {
   credintialsLogin,
   getNewAccessTokenService,
+  resetPasswordService,
 };
