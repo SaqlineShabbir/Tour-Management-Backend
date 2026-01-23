@@ -40,7 +40,47 @@ const getNewAccessToken = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       data: tokenInfo,
-      message: "User logged in successfully",
+      message: "New access token retrived successfully",
+    });
+  },
+);
+
+const logout = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.clearCookie("accessToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+    });
+    res.clearCookie("refreshToken", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "none",
+    });
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      data: null,
+      message: "User logged out successfully",
+    });
+  },
+);
+const resetPassword = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+    const decodedToken = req.user
+    const reset = await AuthServices.resetPasswordService(
+      oldPassword,
+      newPassword,
+      decodedToken
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      data: null,
+      message: "Password changed successfully",
     });
   },
 );
@@ -48,4 +88,6 @@ const getNewAccessToken = catchAsync(
 export const authController = {
   credintialsLogin,
   getNewAccessToken,
+  logout,
+  resetPassword,
 };
