@@ -28,6 +28,7 @@ const credintialsLogin = async (payload: Partial<IUser>) => {
   );
 
   console.log("isPasswordMatched:", isPasswordMatched);
+  console.log("isPasswordMatched:", isPasswordMatched);
 
   if (!isPasswordMatched) {
     throw new AppError(httpStatus.BAD_REQUEST, "Password does not match");
