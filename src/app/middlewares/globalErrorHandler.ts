@@ -10,7 +10,12 @@ export const globalErrorHandler = (
 ) => {
   let statusCode = 500;
   let message = `Something went wrong ! ${err.message}`;
-  if (err instanceof AppError) {
+  if (err.code === "11000") {
+    const duplicate = err.message.match(/"([^"]*)"/);
+    statusCode = 400;
+    message = `${duplicate[1]} already exists ! Please use another email.`;
+  }
+  else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
   } else if (err instanceof Error) {
