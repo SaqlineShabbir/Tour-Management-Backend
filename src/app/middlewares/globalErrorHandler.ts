@@ -19,6 +19,12 @@ export const globalErrorHandler = (
     statusCode = 400;
     message = `Resource not found. Invalid: ${err.path}`;
   }
+  else if (err.name === "ValidationError") {
+    statusCode = 400;
+    message = Object.values(err.errors)
+      .map((value: any) => value.message)
+      .join(", ");
+  }
   else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
