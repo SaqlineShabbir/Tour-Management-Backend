@@ -15,6 +15,10 @@ export const globalErrorHandler = (
     statusCode = 400;
     message = `${duplicate[1]} already exists ! Please use another email.`;
   }
+  else if( err.name === "CastError" ) {
+    statusCode = 400;
+    message = `Resource not found. Invalid: ${err.path}`;
+  }
   else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
