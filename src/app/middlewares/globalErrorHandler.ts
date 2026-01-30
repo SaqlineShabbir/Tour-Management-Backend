@@ -25,6 +25,10 @@ export const globalErrorHandler = (
       .map((value: any) => value.message)
       .join(", ");
   }
+  else if (err.name === "JsonWebTokenError") {
+    statusCode = 401;
+    message = "Invalid token. Please log in again!";
+  }
   else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
