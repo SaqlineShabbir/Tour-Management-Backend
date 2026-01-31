@@ -29,6 +29,10 @@ export const globalErrorHandler = (
     statusCode = 401;
     message = "Invalid token. Please log in again!";
   }
+  else if (err.name === "TokenExpiredError") {
+    statusCode = 401;
+    message = "Your token has expired! Please log in again.";
+  }
   else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
