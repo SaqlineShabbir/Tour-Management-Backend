@@ -35,7 +35,10 @@ export const globalErrorHandler = (
     err.issues.forEach((issue: any) => {
       message += ` ${issue.path[0]}: ${issue.message}.`;
     });
-  } else if (err instanceof AppError) {
+  }
+  
+  // ff
+  else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
   } else if (err instanceof Error) {
