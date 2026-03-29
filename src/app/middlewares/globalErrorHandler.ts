@@ -40,6 +40,7 @@ export const globalErrorHandler = (
   // ff
   // ff
   // ff
+  // ff
   else if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
